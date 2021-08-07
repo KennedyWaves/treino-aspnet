@@ -87,14 +87,13 @@ namespace calculadora_rest.Controllers
             return BadRequest("Invalid input");
         }
 
-        [HttpGet("Sqrt/{firstNumber}/{secondNumber}")]
-        public IActionResult Sqrt(string firstNumber, string secondNumber)
+        [HttpGet("Sqrt/{firstNumber}")]
+        public IActionResult Sqrt(string firstNumber)
         {
             decimal n1;
-            decimal n2;
-            if (IsNumeric(firstNumber, out n1) && IsNumeric(secondNumber, out n2))
+            if (IsNumeric(firstNumber, out n1))
             {
-                return Ok(Math.Pow((double)n1, (double)n2).ToString());
+                return Ok(Math.Sqrt((double)n1).ToString());
             }
             return BadRequest("Invalid input");
         }
