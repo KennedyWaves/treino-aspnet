@@ -32,7 +32,7 @@ namespace RestMethods
         {
 
             services.AddControllers();
-
+            services.AddApiVersioning();
             string connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySQLContext>(
                 options => options.UseMySql(connection

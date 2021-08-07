@@ -25,7 +25,7 @@ namespace RestMethods.Services.Implementations
                 dbContext.Add(person);
                 dbContext.SaveChanges();
             }
-            catch(SystemException ex)
+            catch(SystemException)
             {
 
             }
