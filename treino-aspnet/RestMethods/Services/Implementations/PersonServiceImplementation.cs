@@ -1,4 +1,5 @@
 ﻿using RestMethods.Model;
+using RestMethods.Model.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,60 +10,105 @@ namespace RestMethods.Services.Implementations
 {
     public class PersonServiceImplementation : IPersonService
     {
-        private int count;
+        private MySQLContext dbContext;
+
+        public PersonServiceImplementation(MySQLContext context)
+        {
+            dbContext=context;
+        }
+
 
         Person IPersonService.Create(Person person)
         {
-            person.Id = IncrementAndGet();
+            try
+            {
+                dbContext.Add(person);
+                dbContext.SaveChanges();
+            }
+            catch(SystemException ex)
+            {
+
+            }
             return person;
         }
 
         void IPersonService.Delete(long id)
         {
-
+            Person result = dbContext.Persons.SingleOrDefault(p => p.Id.Equals(id));
+            if (result != null)
+            {
+                dbContext.Persons.Remove(result);
+                dbContext.SaveChanges();
+            }
         }
-
+        /// <summary>
+        /// Retorna um elemento a partir do id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Person IPersonService.GetById(long id)
         {
-            return new Person()
-            {
-                Id = id,
-                FirstName = "Cuca",
-                LastName = "Beludo",
-                Address = "Meio Do Mundo-AP",
-                Gender = Gender.Male
-            };
+            return dbContext.Persons.SingleOrDefault(p=>p.Id.Equals(id));
         }
-
+        /// <summary>
+        /// Retorna todos os elementos.
+        /// </summary>
+        /// <returns></returns>
         List<Person> IPersonService.ListAll()
         {
-            List<Person> persons = new List<Person>();
-            for (int x = 0; x < 8; x++)
-            {
-                persons.Add(MockPerson());
-            }
-            return persons;
+            return dbContext.Persons.ToList();
         }
+        /// <summary>
+        /// Atualiza um elemento.
+        /// </summary>
+        /// <param name="person">Objeto com dados a serem persistidos.</param>
+        /// <returns></returns>
+        Person IPersonService.Replace(Person person)
+        {
+            try
+            {
+                if (!Exists(person.Id))
+                {
+                    return null;
+                }
+                else
+                {
+                    dbContext.Update(person);
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (SystemException)
+            {
+                throw;
+            }
+            return person;
+            
+        }
+        /// <summary>
+        /// Determina se uma entrada já existe no banco.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool Exists(long id)
+        {
+            return dbContext.Persons.Any(p => p.Id.Equals(id));
+        }
+        /// <summary>
+        /// Atualiza parcialmente um objeto.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
         Person IPersonService.Update(Person person)
         {
-            return person;
-        }
-
-        Person MockPerson()
-        {
-            return new Person()
+            try
             {
-                Id = IncrementAndGet(),
-                FirstName = "Cuca",
-                LastName = "Beludo",
-                Address = "Meio Do Mundo-AP",
-                Gender = Gender.Male
-            };
-        }
 
-        private long IncrementAndGet()
-        {
-            return Interlocked.Increment(ref count);
+            }
+            catch (SystemException)
+            {
+                throw;
+            }
+            return person;
         }
     }
 }

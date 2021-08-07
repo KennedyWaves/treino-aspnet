@@ -66,11 +66,31 @@ namespace RestMethods.Controllers
 
         [HttpPut]
         /// <summary>
-        /// Persiste um objeto.
+        /// Substitui um objeto.
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
         public IActionResult Put([FromBody] Person person)
+        {
+            var result = personService.Replace(person);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
+
+        [HttpPatch]
+        /// <summary>
+        /// Atualiza um objeto.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public IActionResult Patch([FromBody] Person person)
         {
             var result = personService.Update(person);
             if (result == null)
@@ -82,6 +102,7 @@ namespace RestMethods.Controllers
                 return Ok(result);
             }
         }
+
         [HttpDelete("{id}")]
         /// <summary>
         /// Remove um objeto a partir do id.

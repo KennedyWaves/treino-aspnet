@@ -26,15 +26,21 @@ namespace RestMethods.Services
         /// <returns></returns>
         List<Person> ListAll();
         /// <summary>
-        /// Atualiza um objeto <see cref="Person"/>.
+        /// Substitui um objeto <see cref="Person"/>.
         /// </summary>
         /// <param name="person">Objeto a ser persistido.</param>
         /// <returns></returns>
-        Person Update(Person person);
+        Person Replace(Person person);
         /// <summary>
         /// Remove uma <see cref="Person"/> a partir do Id.
         /// </summary>
         /// <param name="id"></param>
-        void Delete(long id); 
+        void Delete(long id);
+        /// <summary>
+        /// Atualiza um objeto.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        Person Update(Person person);
     }
 }
