@@ -13,18 +13,23 @@ using RestMethods.Repository;
 using RestMethods.Repository.Implementations;
 using RestMethods.Services;
 using RestMethods.Services.Implementations;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Pomelo.EntityFrameworkCore.MySql;
 
 namespace RestMethods
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IWebHostEnvironment Enviroment { get; }
+        public Startup(IConfiguration configuration, IWebHostEnvironment enviroment)
         {
             Configuration = configuration;
+            this.Enviroment = enviroment;
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +37,7 @@ namespace RestMethods
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
 
             services.AddControllers();
             services.AddApiVersioning();
@@ -43,9 +49,34 @@ namespace RestMethods
                     )
                     )
                 );
+            if (Enviroment.IsDevelopment())
+            {
+                MigrateDatabase(connection);
+            }
             //Dependency injection
             services.AddScoped<IPersonService, PersonServiceImplementation>();
             services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+        }
+
+        private void MigrateDatabase(string connection)
+        {
+            try
+            {
+                var evolveConnecion = new MySql.Data.MySqlClient.MySqlConnection(connection);
+                var evolve = new Evolve.Evolve(evolveConnecion, msg => Log.Information(msg))
+                {
+                    Locations = new List<String>()
+                    {
+                        "db/migrations","db/dataset"
+                    },
+                    IsEraseDisabled = true
+                };
+                evolve.Migrate();
+            }
+            catch(SystemException ex)
+            {
+                Log.Error(ex.Message);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
