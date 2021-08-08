@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MySqlConnector;
 using RestMethods.Model.Context;
+using RestMethods.Repository;
+using RestMethods.Repository.Implementations;
 using RestMethods.Services;
 using RestMethods.Services.Implementations;
 using System;
@@ -43,6 +45,7 @@ namespace RestMethods
                 );
             //Dependency injection
             services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

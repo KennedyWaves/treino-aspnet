@@ -39,7 +39,7 @@ namespace RestMethods.Controllers
         /// <returns></returns>
         public IActionResult Get(long id)
         {
-            var person = personService.GetById(id);
+            var person = personService.FindById(id);
             if(person== null)
             {
                 return NotFound();

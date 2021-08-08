@@ -1,5 +1,6 @@
 ﻿using RestMethods.Model;
 using RestMethods.Model.Context;
+using RestMethods.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,105 +11,46 @@ namespace RestMethods.Services.Implementations
 {
     public class PersonServiceImplementation : IPersonService
     {
-        private MySQLContext dbContext;
+        private IPersonRepository repository;
 
-        public PersonServiceImplementation(MySQLContext context)
+        public PersonServiceImplementation(IPersonRepository repo)
         {
-            dbContext=context;
+            repository = repo;
         }
-
 
         Person IPersonService.Create(Person person)
         {
-            try
-            {
-                dbContext.Add(person);
-                dbContext.SaveChanges();
-            }
-            catch(SystemException)
-            {
-
-            }
-            return person;
+            return repository.Create(person);
         }
 
         void IPersonService.Delete(long id)
         {
-            Person result = dbContext.Persons.SingleOrDefault(p => p.Id.Equals(id));
-            if (result != null)
-            {
-                dbContext.Persons.Remove(result);
-                dbContext.SaveChanges();
-            }
+            repository.Delete(id);
         }
-        /// <summary>
-        /// Retorna um elemento a partir do id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Person IPersonService.GetById(long id)
+
+        bool IPersonService.Exists(long id)
         {
-            return dbContext.Persons.SingleOrDefault(p=>p.Id.Equals(id));
+            return true;
         }
-        /// <summary>
-        /// Retorna todos os elementos.
-        /// </summary>
-        /// <returns></returns>
+
+        Person IPersonService.FindById(long id)
+        {
+            return repository.FindById(id);
+        }
+
         List<Person> IPersonService.ListAll()
         {
-            return dbContext.Persons.ToList();
+            return repository.ListAll();
         }
-        /// <summary>
-        /// Atualiza um elemento.
-        /// </summary>
-        /// <param name="person">Objeto com dados a serem persistidos.</param>
-        /// <returns></returns>
+
         Person IPersonService.Replace(Person person)
         {
-            try
-            {
-                if (!Exists(person.Id))
-                {
-                    return null;
-                }
-                else
-                {
-                    dbContext.Update(person);
-                    dbContext.SaveChanges();
-                }
-            }
-            catch (SystemException)
-            {
-                throw;
-            }
-            return person;
-            
+            return repository.Replace(person);
         }
-        /// <summary>
-        /// Determina se uma entrada já existe no banco.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool Exists(long id)
-        {
-            return dbContext.Persons.Any(p => p.Id.Equals(id));
-        }
-        /// <summary>
-        /// Atualiza parcialmente um objeto.
-        /// </summary>
-        /// <param name="person"></param>
-        /// <returns></returns>
+
         Person IPersonService.Update(Person person)
         {
-            try
-            {
-
-            }
-            catch (SystemException)
-            {
-                throw;
-            }
-            return person;
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestMethods.Services
+namespace RestMethods.Repository
 {
-    public interface IPersonService
+    public interface IPersonRepository
     {
         /// <summary>
         /// Persiste um objeto <see cref="Person"/>.
@@ -15,17 +15,11 @@ namespace RestMethods.Services
         /// <returns></returns>
         public Person Create(Person person);
         /// <summary>
-        /// Verifica se um objeto já foi persistido antes.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool Exists(long id);
-        /// <summary>
         /// Retorna uma pessoa a partir do Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Person FindById(long  id);
+        public Person FindById(long id);
         /// <summary>
         /// Retorna uma lista de todas as <see cref="Person"/>
         /// </summary>
