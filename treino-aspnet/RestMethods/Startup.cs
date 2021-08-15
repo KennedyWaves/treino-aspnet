@@ -54,6 +54,8 @@ namespace RestMethods
             //Dependency injection
             services.AddScoped<IPersonService, PersonServiceImplementation>();
             services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+            services.AddScoped<IBookService, BookServiceImplementation>();
+            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
         }
 
         private void MigrateDatabase(string connection)
