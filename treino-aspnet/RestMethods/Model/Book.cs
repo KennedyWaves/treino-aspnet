@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestMethods.Model.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -7,13 +8,8 @@ using System.Threading.Tasks;
 namespace RestMethods.Model
 {
     [Table("books")]
-    public class Book
+    public class Book:BaseEntity
     {
-        [Column("id")]
-        /// <summary>
-        /// Determina o identificador do objeto.
-        /// </summary>
-        public int Id { get; set; }
         [Column("author")]
         /// <summary>
         /// Determina o autor do livro.

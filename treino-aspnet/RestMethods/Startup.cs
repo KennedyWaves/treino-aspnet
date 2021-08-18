@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using MySqlConnector;
 using RestMethods.Model.Context;
 using RestMethods.Repository;
-using RestMethods.Repository.Implementations;
 using RestMethods.Services;
 using RestMethods.Services.Implementations;
 using Serilog;
@@ -19,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Pomelo.EntityFrameworkCore.MySql;
+using RestMethods.Repository.Generic;
 
 namespace RestMethods
 {
@@ -52,10 +52,9 @@ namespace RestMethods
                 MigrateDatabase(connection);
             }
             //Dependency injection
-            services.AddScoped<IPersonService, PersonServiceImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
-            services.AddScoped<IBookService, BookServiceImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         private void MigrateDatabase(string connection)

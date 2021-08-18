@@ -1,6 +1,7 @@
 ﻿using RestMethods.Model;
 using RestMethods.Model.Context;
 using RestMethods.Repository;
+using RestMethods.Repository.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace RestMethods.Services.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonService : IPersonService
     {
-        private IPersonRepository repository;
+        private IRepository<Person> repository;
 
-        public PersonServiceImplementation(IPersonRepository repo)
+        public PersonService(IRepository<Person> repo)
         {
             repository = repo;
         }
@@ -41,11 +42,6 @@ namespace RestMethods.Services.Implementations
         List<Person> IPersonService.ListAll()
         {
             return repository.ListAll();
-        }
-
-        Person IPersonService.Replace(Person person)
-        {
-            return repository.Replace(person);
         }
 
         Person IPersonService.Update(Person person)

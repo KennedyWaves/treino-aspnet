@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestMethods.Model.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -24,13 +25,8 @@ namespace RestMethods.Model
     /// <summary>
     /// Representa uma pessoa natural.
     /// </summary>
-    public class Person
+    public class Person:BaseEntity
     {
-        [Column("id")]
-        /// <summary>
-        /// Determina o identificador do objeto
-        /// </summary>
-        public long Id { get; set; }
         [Column("first_name")]
         /// <summary>
         /// Determina o primeiro nome.

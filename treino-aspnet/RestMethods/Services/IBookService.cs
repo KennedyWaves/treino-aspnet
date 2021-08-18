@@ -36,17 +36,11 @@ namespace RestMethods.Services
         /// </summary>
         /// <param name="book">Objeto a ser persistido.</param>
         /// <returns></returns>
-        public Book Replace(Book book);
+        public Book Update(Book book);
         /// <summary>
         /// Remove uma <see cref="Book"/> a partir do Id.
         /// </summary>
         /// <param name="id"></param>
         public void Delete(long id);
-        /// <summary>
-        /// Atualiza um objeto.
-        /// </summary>
-        /// <param name="book"></param>
-        /// <returns></returns>
-        public Book Update(Book book);
     }
 }

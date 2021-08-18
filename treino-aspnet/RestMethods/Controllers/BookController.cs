@@ -73,7 +73,7 @@ namespace RestMethods.Controllers
         /// <returns></returns>
         public IActionResult Put([FromBody] Book book)
         {
-            var result = bookService.Replace(book);
+            var result = bookService.Update(book);
             if (result == null)
             {
                 return BadRequest();

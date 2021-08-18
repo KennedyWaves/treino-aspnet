@@ -32,12 +32,6 @@ namespace RestMethods.Services
         /// <returns></returns>
         public List<Person> ListAll();
         /// <summary>
-        /// Substitui um objeto <see cref="Person"/>.
-        /// </summary>
-        /// <param name="person">Objeto a ser persistido.</param>
-        /// <returns></returns>
-        public Person Replace(Person person);
-        /// <summary>
         /// Remove uma <see cref="Person"/> a partir do Id.
         /// </summary>
         /// <param name="id"></param>

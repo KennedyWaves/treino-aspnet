@@ -1,5 +1,6 @@
 ﻿using RestMethods.Model;
 using RestMethods.Repository;
+using RestMethods.Repository.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace RestMethods.Services.Implementations
 {
-    public class BookServiceImplementation : IBookService
+    public class BookService : IBookService
     {
-        private IBookRepository repository;
+        private IRepository<Book> repository;
 
-        public BookServiceImplementation(IBookRepository repo)
+        public BookService(IRepository<Book> repo)
         {
             repository = repo;
         }
@@ -41,14 +42,9 @@ namespace RestMethods.Services.Implementations
             return repository.ListAll();
         }
 
-        Book IBookService.Replace(Book book)
-        {
-            return repository.Replace(book);
-        }
-
         Book IBookService.Update(Book book)
         {
-            throw new NotImplementedException();
+            return repository.Update(book);
         }
     }
 }
