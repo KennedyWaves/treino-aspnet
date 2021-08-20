@@ -1,4 +1,6 @@
-﻿using RestMethods.Model;
+﻿using RestMethods.Data.Converter.Impl;
+using RestMethods.Data.DTO;
+using RestMethods.Model;
 using RestMethods.Repository;
 using RestMethods.Repository.Generic;
 using System;
@@ -11,15 +13,16 @@ namespace RestMethods.Services.Implementations
     public class BookService : IBookService
     {
         private IRepository<Book> repository;
+        private BookConverter converter = new BookConverter();
 
         public BookService(IRepository<Book> repo)
         {
             repository = repo;
         }
 
-        Book IBookService.Create(Book book)
+        BookDTO IBookService.Create(BookDTO  BookDTO )
         {
-            return repository.Create(book);
+            return converter.Convert(repository.Create(converter.Convert(BookDTO)));
         }
 
         void IBookService.Delete(long id)
@@ -32,19 +35,19 @@ namespace RestMethods.Services.Implementations
             return true;
         }
 
-        Book IBookService.FindById(long id)
+        BookDTO IBookService.FindById(long id)
         {
-            return repository.FindById(id);
+            return converter.Convert(repository.FindById(id));
         }
 
-        List<Book> IBookService.ListAll()
+        List<BookDTO>IBookService.ListAll()
         {
-            return repository.ListAll();
+            return converter.Convert(repository.ListAll());
         }
 
-        Book IBookService.Update(Book book)
+        BookDTO IBookService.Update(BookDTO  BookDTO )
         {
-            return repository.Update(book);
+            return converter.Convert(repository.Update(converter.Convert(BookDTO)));
         }
     }
 }

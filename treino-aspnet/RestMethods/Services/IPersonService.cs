@@ -1,4 +1,5 @@
-﻿using RestMethods.Model;
+﻿using RestMethods.Data.DTO;
+using RestMethods.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace RestMethods.Services
     public interface IPersonService
     {
         /// <summary>
-        /// Persiste um objeto <see cref="Person"/>.
+        /// Persiste um objeto <see cref="PersonDTO"/>.
         /// </summary>
         /// <param name="person">Objeto a ser persistido.</param>
         /// <returns></returns>
-        public Person Create(Person person);
+        public PersonDTO Create(PersonDTO person);
         /// <summary>
         /// Verifica se um objeto já foi persistido antes.
         /// </summary>
@@ -25,12 +26,12 @@ namespace RestMethods.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Person FindById(long  id);
+        public PersonDTO FindById(long  id);
         /// <summary>
         /// Retorna uma lista de todas as <see cref="Person"/>
         /// </summary>
         /// <returns></returns>
-        public List<Person> ListAll();
+        public List<PersonDTO> ListAll();
         /// <summary>
         /// Remove uma <see cref="Person"/> a partir do Id.
         /// </summary>
@@ -41,6 +42,6 @@ namespace RestMethods.Services
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public Person Update(Person person);
+        public PersonDTO Update(PersonDTO person);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RestMethods.Data.DTO;
 using RestMethods.Model;
 using RestMethods.Services;
 using System;
@@ -52,7 +53,7 @@ namespace RestMethods.Controllers
         /// </summary>
         /// <param name="book"></param>
         /// <returns></returns>
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Post([FromBody] BookDTO book)
         {
             var result = bookService.Create(book);
             if (result == null)
@@ -71,7 +72,7 @@ namespace RestMethods.Controllers
         /// </summary>
         /// <param name="book"></param>
         /// <returns></returns>
-        public IActionResult Put([FromBody] Book book)
+        public IActionResult Put([FromBody] BookDTO book)
         {
             var result = bookService.Update(book);
             if (result == null)
@@ -91,7 +92,7 @@ namespace RestMethods.Controllers
         /// </summary>
         /// <param name="book"></param>
         /// <returns></returns>
-        public IActionResult Patch([FromBody] Book book)
+        public IActionResult Patch([FromBody] BookDTO book)
         {
             var result = bookService.Update(book);
             if (result == null)

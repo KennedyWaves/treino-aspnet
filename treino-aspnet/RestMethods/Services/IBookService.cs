@@ -1,4 +1,5 @@
-﻿using RestMethods.Model;
+﻿using RestMethods.Data.DTO;
+using RestMethods.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace RestMethods.Services
     public interface IBookService
     {
         /// <summary>
-        /// Persiste um objeto <see cref="Book"/>.
+        /// Persiste um objeto <see cref="BookDTO"/>.
         /// </summary>
-        /// <param name="book">Objeto a ser persistido.</param>
+        /// <param name="BookDTO">Objeto a ser persistido.</param>
         /// <returns></returns>
-        public Book Create(Book book);
+        public BookDTO Create(BookDTO BookDTO);
         /// <summary>
         /// Verifica se um objeto já foi persistido antes.
         /// </summary>
@@ -25,20 +26,20 @@ namespace RestMethods.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Book FindById(long id);
+        public BookDTO FindById(long id);
         /// <summary>
-        /// Retorna uma lista de todas as <see cref="Book"/>
+        /// Retorna uma lista de todas as <see cref="BookDTO"/>
         /// </summary>
         /// <returns></returns>
-        public List<Book> ListAll();
+        public List<BookDTO> ListAll();
         /// <summary>
-        /// Substitui um objeto <see cref="Book"/>.
+        /// Substitui um objeto <see cref="BookDTO"/>.
         /// </summary>
-        /// <param name="book">Objeto a ser persistido.</param>
+        /// <param name="BookDTO">Objeto a ser persistido.</param>
         /// <returns></returns>
-        public Book Update(Book book);
+        public BookDTO Update(BookDTO BookDTO);
         /// <summary>
-        /// Remove uma <see cref="Book"/> a partir do Id.
+        /// Remove uma <see cref="BookDTO"/> a partir do Id.
         /// </summary>
         /// <param name="id"></param>
         public void Delete(long id);

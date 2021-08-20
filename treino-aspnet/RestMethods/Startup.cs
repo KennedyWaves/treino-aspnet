@@ -19,6 +19,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Pomelo.EntityFrameworkCore.MySql;
 using RestMethods.Repository.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace RestMethods
 {
@@ -38,7 +39,6 @@ namespace RestMethods
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddApiVersioning();
             string connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySQLContext>(
                 options => options.UseMySql(connection
@@ -51,6 +51,13 @@ namespace RestMethods
             {
                 MigrateDatabase(connection);
             }
+            services.AddMvc(options => { options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            }).AddXmlSerializerFormatters();
+
+            //api versioning
+            services.AddApiVersioning();
             //Dependency injection
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IBookService, BookService>();

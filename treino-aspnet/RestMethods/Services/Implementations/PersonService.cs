@@ -1,4 +1,6 @@
-﻿using RestMethods.Model;
+﻿using RestMethods.Data.Converter.Impl;
+using RestMethods.Data.DTO;
+using RestMethods.Model;
 using RestMethods.Model.Context;
 using RestMethods.Repository;
 using RestMethods.Repository.Generic;
@@ -12,16 +14,17 @@ namespace RestMethods.Services.Implementations
 {
     public class PersonService : IPersonService
     {
-        private IRepository<Person> repository;
+        private readonly IRepository<Person> repository;
+        private readonly PersonConverter converter = new PersonConverter();
 
         public PersonService(IRepository<Person> repo)
         {
             repository = repo;
         }
 
-        Person IPersonService.Create(Person person)
+        PersonDTO IPersonService.Create(PersonDTO person)
         {
-            return repository.Create(person);
+            return converter.Convert(repository.Create(converter.Convert(person)));
         }
 
         void IPersonService.Delete(long id)
@@ -34,19 +37,19 @@ namespace RestMethods.Services.Implementations
             return true;
         }
 
-        Person IPersonService.FindById(long id)
+        PersonDTO IPersonService.FindById(long id)
         {
-            return repository.FindById(id);
+            return converter.Convert(repository.FindById(id));
         }
 
-        List<Person> IPersonService.ListAll()
+        List<PersonDTO> IPersonService.ListAll()
         {
-            return repository.ListAll();
+            return converter.Convert(repository.ListAll());
         }
 
-        Person IPersonService.Update(Person person)
+        PersonDTO IPersonService.Update(PersonDTO person)
         {
-            throw new NotImplementedException();
+            return converter.Convert(repository.Update(converter.Convert(person)));
         }
     }
 }

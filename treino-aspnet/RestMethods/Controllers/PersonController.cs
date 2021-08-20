@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RestMethods.Data.DTO;
 using RestMethods.Model;
 using RestMethods.Services;
 using System;
@@ -34,7 +35,7 @@ namespace RestMethods.Controllers
         [HttpGet("{id}")]
         /// <summary>
         /// Retorna um objeto a partir do Id.
-        /// </summary>
+        /// </summary>BookDTO
         /// <param name="id"></param>
         /// <returns></returns>
         public IActionResult Get(long id)
@@ -52,7 +53,7 @@ namespace RestMethods.Controllers
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonDTO person)
         {
             var result = personService.Create(person);
             if (result == null)
@@ -71,7 +72,7 @@ namespace RestMethods.Controllers
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonDTO person)
         {
             var result = personService.Update(person);
             if (result == null)
@@ -91,7 +92,7 @@ namespace RestMethods.Controllers
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public IActionResult Patch([FromBody] Person person)
+        public IActionResult Patch([FromBody] PersonDTO person)
         {
             var result = personService.Update(person);
             if (result == null)
