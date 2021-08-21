@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestMethods.Data.DTO;
+using RestMethods.Hypermedia.Filters;
 using RestMethods.Model;
 using RestMethods.Services;
 using System;
@@ -24,6 +25,7 @@ namespace RestMethods.Controllers
             this.personService = personService;
         }
         [HttpGet]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Retorna todas as <see cref="Model.Person"/>
         /// </summary>
@@ -33,6 +35,7 @@ namespace RestMethods.Controllers
             return Ok(personService.ListAll());
         }
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Retorna um objeto a partir do Id.
         /// </summary>BookDTO
@@ -48,6 +51,7 @@ namespace RestMethods.Controllers
             return Ok(person);
         }
         [HttpPost]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Persiste um objeto.
         /// </summary>
@@ -67,6 +71,7 @@ namespace RestMethods.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Substitui um objeto.
         /// </summary>
@@ -87,6 +92,7 @@ namespace RestMethods.Controllers
 
 
         [HttpPatch]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Atualiza um objeto.
         /// </summary>

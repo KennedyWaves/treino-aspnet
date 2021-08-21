@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using Pomelo.EntityFrameworkCore.MySql;
 using RestMethods.Repository.Generic;
 using Microsoft.Net.Http.Headers;
+using RestMethods.Hypermedia.Filters;
+using RestMethods.Hypermedia.Enricher;
 
 namespace RestMethods
 {
@@ -55,7 +57,11 @@ namespace RestMethods
                 options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
             }).AddXmlSerializerFormatters();
-
+            // Adiciona filtros de hypermidia
+            var filterOptions = new HypermediaFilterOptions();
+            filterOptions.ContentResponseEnrichers.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnrichers.Add(new BookEnricher());
+            services.AddSingleton(filterOptions);
             //api versioning
             services.AddApiVersioning();
             //Dependency injection
@@ -102,6 +108,7 @@ namespace RestMethods
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
     }

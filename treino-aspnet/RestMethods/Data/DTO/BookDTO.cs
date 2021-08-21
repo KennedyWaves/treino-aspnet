@@ -1,4 +1,6 @@
-﻿using RestMethods.Model.Base;
+﻿using RestMethods.Abstract.Hypermedia;
+using RestMethods.Hypermedia;
+using RestMethods.Model.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RestMethods.Data.DTO
 {
-    public class BookDTO
+    public class BookDTO : ISupportHypermedia
     {
         /// <summary>
         /// Determina o identificador do objeto.
@@ -29,5 +31,9 @@ namespace RestMethods.Data.DTO
         /// Determina o preço do livro.
         /// </summary>
         public decimal Price { get; set; }
+        /// <summary>
+        /// Fornece links do padrão HATEOAS
+        /// </summary>
+        public List<HypermediaLink> Links { get; set; } = new List<HypermediaLink>();
     }
 }
