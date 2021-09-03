@@ -22,6 +22,7 @@ using RestMethods.Repository.Generic;
 using Microsoft.Net.Http.Headers;
 using RestMethods.Hypermedia.Filters;
 using RestMethods.Hypermedia.Enricher;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestMethods
 {
@@ -64,6 +65,20 @@ namespace RestMethods
             services.AddSingleton(filterOptions);
             //api versioning
             services.AddApiVersioning();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Treino ASP.NET",
+                    Version = "v1",
+                    Description = "API desenvolvida como treino de habilidades em ASP.NET",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                    {
+                        Name = "WAVES Systems",
+                        Url = new Uri("https://www.github.com/KennedyWaves")
+                    }
+                });
+            });
             //Dependency injection
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IBookService, BookService>();
@@ -102,6 +117,16 @@ namespace RestMethods
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Treino ASP.NET v1"); });
+
+            var option = new RewriteOptions();
+
+            option.AddRedirect("^$", "swagger");
+
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 

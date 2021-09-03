@@ -14,6 +14,7 @@ namespace RestMethods.Controllers
     [ApiVersion("1")]
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
+    //[Route("api/v{version:apiVersion}/[controller]")]
     public class PersonController : Controller
     {
 
@@ -25,6 +26,10 @@ namespace RestMethods.Controllers
             this.personService = personService;
         }
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<PersonDTO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Retorna todas as <see cref="Model.Person"/>
@@ -35,6 +40,10 @@ namespace RestMethods.Controllers
             return Ok(personService.ListAll());
         }
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(PersonDTO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Retorna um objeto a partir do Id.
@@ -51,6 +60,9 @@ namespace RestMethods.Controllers
             return Ok(person);
         }
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(PersonDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Persiste um objeto.
@@ -71,6 +83,9 @@ namespace RestMethods.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(PersonDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Substitui um objeto.
@@ -92,6 +107,9 @@ namespace RestMethods.Controllers
 
 
         [HttpPatch]
+        [ProducesResponseType((200), Type = typeof(PersonDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Atualiza um objeto.
@@ -122,7 +140,7 @@ namespace RestMethods.Controllers
             personService.Delete(id);
             return NoContent();
         }
-
+        [NonAction]
         public IActionResult Index()
         {
             return View();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestMethods.Data.DTO;
+using RestMethods.Hypermedia.Filters;
 using RestMethods.Model;
 using RestMethods.Services;
 using System;
@@ -24,6 +25,11 @@ namespace RestMethods.Controllers
             this.bookService = bookService;
         }
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<BookDTO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Retorna todas as <see cref="Model.Book"/>
         /// </summary>
@@ -33,6 +39,11 @@ namespace RestMethods.Controllers
             return Ok(bookService.ListAll());
         }
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(BookDTO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Retorna um objeto a partir do Id.
         /// </summary>
@@ -48,6 +59,10 @@ namespace RestMethods.Controllers
             return Ok(book);
         }
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Persiste um objeto.
         /// </summary>
@@ -67,6 +82,10 @@ namespace RestMethods.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Substitui um objeto.
         /// </summary>
@@ -87,6 +106,10 @@ namespace RestMethods.Controllers
 
 
         [HttpPatch]
+        [ProducesResponseType((200), Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HypermediaFilter))]
         /// <summary>
         /// Atualiza um objeto.
         /// </summary>
@@ -116,7 +139,7 @@ namespace RestMethods.Controllers
             bookService.Delete(id);
             return NoContent();
         }
-
+        [NonAction]
         public IActionResult Index()
         {
             return View();
